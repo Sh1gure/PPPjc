@@ -181,13 +181,13 @@ fun ItemsComponent(itemsList: List<NotesEntity>, viewModel: MainViewModel) {
 
 @Composable
 fun LiveDataLoadingComponent() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = CenterHorizontally
-    ) {
-        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
-    }
+//    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = CenterHorizontally
+//    ) {
+//        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
+//    }
 }
 
 @Preview(showBackground = true)
