@@ -10,7 +10,7 @@ class NotesUseCase(
 
     fun getNotesFlow(): Flow<List<NotesEntity>> = notesRepository.getNotesFlow()
 
-    fun deleteNote(id: Int) {
+    fun deleteNote(id: Long) {
         notesRepository.delete(id)
     }
 

@@ -31,7 +31,7 @@ class MainViewModel(
         }
     }
 
-    fun deleteItem(id: Int) {
+    fun deleteItem(id: Long) {
         viewModelScope.launch(scope) {
             useCase.deleteNote(id)
         }

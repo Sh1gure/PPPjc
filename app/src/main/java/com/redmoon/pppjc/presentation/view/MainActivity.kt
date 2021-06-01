@@ -12,7 +12,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -25,8 +24,10 @@ import com.redmoon.pppjc.R
 import com.redmoon.pppjc.common.local.NotesEntity
 import com.redmoon.pppjc.presentation.viewModel.MainViewModel
 import com.redmoon.pppjc.ui.theme.PPPjcTheme
-import org.koin.android.viewmodel.ext.android.viewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
@@ -72,11 +73,11 @@ fun SetButton(viewModel: MainViewModel, openDialog: MutableState<Boolean>) {
 @Composable
 fun AddNoteDialog(viewModel: MainViewModel, openDialog: MutableState<Boolean>) {
     if (openDialog.value) {
-        var title by rememberSaveable {
-            mutableStateOf("Title")
+        val title = remember {
+            mutableStateOf(TextFieldValue(""))
         }
-        var description by rememberSaveable {
-            mutableStateOf("Description")
+        val description = remember {
+            mutableStateOf(TextFieldValue(""))
         }
         AlertDialog(onDismissRequest = {
             openDialog.value = false
@@ -86,22 +87,25 @@ fun AddNoteDialog(viewModel: MainViewModel, openDialog: MutableState<Boolean>) {
 
                 Column(Modifier.padding(8.dp)) {
                     Text(text = "Add Note")
-                    TextField(value = "",
+                    OutlinedTextField(value = title.value,
                         onValueChange = {
-                            title = it
+                            title.value = it
                         },
                         label = { Text(text = "Title") }
                     )
-                    TextField(value = "",
+                    OutlinedTextField(value = description.value,
                         onValueChange = {
-                            description = it
+                            description.value = it
                         },
                         label = { Text(text = "Description") }
                     )
                 }
             },
             confirmButton = {
-                Button(onClick = { viewModel.addItem(title = title, description = description) }) {
+                Button(onClick = {
+                    viewModel.addItem(title = title.value.text, description = description.value.text)
+                    openDialog.value = false
+                }) {
                     Text(text = "Confirm")
                 }
             },
@@ -150,8 +154,11 @@ fun ItemsComponent(itemsList: List<NotesEntity>, viewModel: MainViewModel) {
                             )
                         )
                     }, secondaryText = {
+                        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                        val date = java.util.Date(note.timestamp)
+                        sdf.format(date)
                         Text(
-                            text = "${note.description} \n${note.timestamp}",
+                            text = "${note.description} \n${sdf.format(date)}",
                             style = TextStyle(
                                 fontFamily = FontFamily.Serif, fontSize = 15.sp,
                                 fontWeight = FontWeight.Light, color = Color.DarkGray
@@ -183,10 +190,10 @@ fun LiveDataLoadingComponent() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    PPPjcTheme {
-//        ItemsComponent()
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    PPPjcTheme {
+        LiveDataLoadingComponent()
+    }
+}

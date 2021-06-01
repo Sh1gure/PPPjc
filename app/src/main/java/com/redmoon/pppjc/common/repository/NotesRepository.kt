@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface NotesRepository {
     fun getNotesFlow(): Flow<List<NotesEntity>>
     fun insertNote(notes: NotesEntity)
-    fun delete(id: Int)
+    fun delete(id: Long)
 }

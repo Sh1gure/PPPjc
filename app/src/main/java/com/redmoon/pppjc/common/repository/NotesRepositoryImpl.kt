@@ -15,7 +15,7 @@ class NotesRepositoryImpl(
         notesDao.DAO().insertNotes(notes)
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         notesDao.DAO().deleteNote(id)
     }
 }

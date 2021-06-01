@@ -3,21 +3,22 @@ package com.redmoon.pppjc.common.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "cache")
 data class NotesEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int = -1,
+    val id: Long = 0,
 
     @ColumnInfo(name = "desc")
-    var description: String,
+    val description: String,
 
     @ColumnInfo(name = "title")
-    var title: String,
+    val title: String,
 
     @ColumnInfo(name = "timeStamp")
-    var timestamp: Long,
+    val timestamp: Long,
 
 )

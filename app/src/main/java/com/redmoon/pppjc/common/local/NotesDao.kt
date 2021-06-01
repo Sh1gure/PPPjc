@@ -12,7 +12,7 @@ interface NotesDao {
     fun insertNotes(data: NotesEntity)
 
     @Query("DELETE FROM cache WHERE id = :id")
-    fun deleteNote(id: Int)
+    fun deleteNote(id: Long)
 
     @Query("SELECT * FROM cache")
     fun getNotes(): Flow<List<NotesEntity>>
